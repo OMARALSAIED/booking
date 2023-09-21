@@ -18,29 +18,29 @@ class _AddusersState extends State<Addusers> {
   GlobalKey<FormState> formstate = GlobalKey();
 
   Crud _crud = Crud();
-  final TextEditingController iduni = TextEditingController();
+  final TextEditingController idnui = TextEditingController();
   final TextEditingController fullname = TextEditingController();
   bool isLoading = false;
   final TextEditingController uniname = TextEditingController();
   final TextEditingController phon = TextEditingController();
   final TextEditingController city = TextEditingController();
-  final TextEditingController hood = TextEditingController();
+  final TextEditingController district = TextEditingController();
 
   signUp() async {
     if (formstate.currentState!.validate()) {
       isLoading = true;
       setState(() {});
       var response = await _crud.postRequest(linkSignUp, {
-        "iduni": iduni.text,
+        "idnui": idnui.text,
         "fullname": fullname.text,
         "uniname": uniname.text,
         "phon": phon.text,
         "city": city.text,
-        "hood": hood.text
+        "district": district.text
       });
       isLoading = false;
       setState(() {});
-      if (response['status'] == 'Success') {
+      if (response['status'] == 'success') {
         AwesomeDialog(
           context: context,
           dialogType: DialogType.info,
@@ -48,10 +48,21 @@ class _AddusersState extends State<Addusers> {
           title: 'تم إنشاء الحساب بنجاح',
           desc: 'يرجى تسجيل الدخول',
           btnCancelOnPress: () {},
-          btnOkOnPress: () {},
+          btnOkOnPress: () {
+            setState(() {});
+          },
         )..show();
       } else {
-        print("signUp fail");
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.info,
+          animType: AnimType.rightSlide,
+          title: 'الحساب موجود بالفعل',
+          desc: 'يرجى تسجيل الدخول',
+          btnOkOnPress: () {
+            setState(() {});
+          },
+        )..show();
       }
     }
   }
@@ -72,12 +83,14 @@ class _AddusersState extends State<Addusers> {
                     text: "إضافة مشترك جديد",
                   ),
                   Container(
-                    width: 150,
-                    height: 100,
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                        color: Wihte, borderRadius: BorderRadius.circular(100)),
                     child: Icon(
                       Icons.person,
                       color: Hcolor,
-                      size: 80,
+                      size: 70,
                     ),
                   ),
                   SizedBox(
@@ -87,7 +100,7 @@ class _AddusersState extends State<Addusers> {
                       valid: (val) {
                         return VaildInput(val!, 7, 20);
                       },
-                      mycontroller: iduni,
+                      mycontroller: idnui,
                       hint: "الرقم الحامعي",
                       icon: Icon(Icons.numbers)),
                   SizedBox(
@@ -105,7 +118,7 @@ class _AddusersState extends State<Addusers> {
                   ),
                   CustomTextFiled(
                       valid: (val) {
-                        return VaildInput(val!, 3, 50);
+                        return VaildInput(val!, 1, 50);
                       },
                       mycontroller: uniname,
                       hint: "اسم الجامعة",
@@ -115,7 +128,7 @@ class _AddusersState extends State<Addusers> {
                   ),
                   CustomTextFiled(
                       valid: (val) {
-                        return VaildInput(val!, 7, 50);
+                        return VaildInput(val!, 1, 30);
                       },
                       mycontroller: phon,
                       hint: "رقم الهاتف",
@@ -125,7 +138,7 @@ class _AddusersState extends State<Addusers> {
                   ),
                   CustomTextFiled(
                       valid: (val) {
-                        return VaildInput(val!, 3, 50);
+                        return VaildInput(val!, 1, 30);
                       },
                       mycontroller: city,
                       hint: "المدينة",
@@ -135,9 +148,9 @@ class _AddusersState extends State<Addusers> {
                   ),
                   CustomTextFiled(
                       valid: (val) {
-                        return VaildInput(val!, 3, 50);
+                        return VaildInput(val!, 1, 30);
                       },
-                      mycontroller: hood,
+                      mycontroller: district,
                       hint: "الحي",
                       icon: Icon(Icons.person)),
                   SizedBox(

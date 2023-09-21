@@ -19,15 +19,13 @@ class _AfterBookState extends State<AfterBook> {
   getbook() async {
     var response = await _crud
         .postRequest(linkviewbook, {"user_id": sharedPref.getString("id")});
-
-    print("response = ${response}");
     return response;
   }
 
- getName() async {
+  getName() async {
     var response = await _crud
         .postRequest(linkgetName, {"id": sharedPref.getString("id")});
-         print("response = ${response}");
+
     return response;
   }
 
@@ -50,6 +48,17 @@ class _AfterBookState extends State<AfterBook> {
             future: getbook(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
+                if (snapshot.data['status'] == 'Failed')
+                  return Center(
+                    
+                    child: Text(
+                      "ليس لديك أي حجز حاليا",
+                      style: TextStyle(fontSize: 30, color: Wihte),
+                    ),
+                    
+                  );
+                  
+
                 return ListView.builder(
                     itemCount: snapshot.data['data'].length,
                     shrinkWrap: true,
@@ -68,7 +77,6 @@ class _AfterBookState extends State<AfterBook> {
                                   borderRadius: BorderRadius.circular(20)),
                               child: Column(
                                 children: [
-                                  
                                   Text(
                                     "تم الحجز بنجاح",
                                     style: TextStyle(fontSize: 30),
@@ -106,7 +114,7 @@ class _AfterBookState extends State<AfterBook> {
                                     ),
                                   ),
                                   Text(
-                                    "${snapshot.data['data'][i]['fullname']}",
+                                    "${snapshot.data['data'][i]['time']}",
                                     style:
                                         TextStyle(fontSize: 20, color: Wihte),
                                   ),
@@ -116,6 +124,11 @@ class _AfterBookState extends State<AfterBook> {
                                         " الاسم : ",
                                         style: TextStyle(
                                             fontSize: 25, color: Wihte),
+                                      ),
+                                      Text(
+                                        "${snapshot.data['data'][i]['fullname']}",
+                                        style: TextStyle(
+                                            fontSize: 20, color: Wihte),
                                       ),
                                     ],
                                   )
@@ -144,7 +157,7 @@ class _AfterBookState extends State<AfterBook> {
                         ],
                       );
                     });
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
+              } else if (snapshot.connectionState == ConnectionState.waiting        ) {
                 return Center(
                   child: Text(
                     "Loading...",

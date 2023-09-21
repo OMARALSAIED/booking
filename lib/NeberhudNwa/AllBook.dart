@@ -3,28 +3,19 @@ import 'package:booking/Customs/color.dart';
 import 'package:booking/auth/Linkapi.dart';
 import 'package:booking/auth/PostandGetFun.dart';
 import 'package:booking/main.dart';
-
 import 'package:flutter/material.dart';
 
-class First extends StatefulWidget {
-  final String studNumber;
-  final String studName;
-  const First({super.key, required this.studNumber, required this.studName});
+class AllBook extends StatelessWidget {
+  AllBook({super.key});
 
-  @override
-  State<First> createState() => _FirstState();
-}
-
-class _FirstState extends State<First> {
   Crud _crud = Crud();
-  getbook() async {
-    var response = await _crud
-        .postRequest(linkviewbook, {"user_id": sharedPref.getString("id")});
 
+  getName() async {
+    var response = await _crud
+        .postRequest(linkgetName, {"id": sharedPref.getString("id")});
     print("response = ${response}");
     return response;
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +26,7 @@ class _FirstState extends State<First> {
         padding: EdgeInsets.all(10),
         child: ListView(children: [
           FutureBuilder(
-            future: getbook(),
+            future: getName(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
@@ -66,6 +57,3 @@ class _FirstState extends State<First> {
     );
   }
 }
-
-
-

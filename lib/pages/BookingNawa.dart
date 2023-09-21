@@ -34,8 +34,9 @@ class BookingNawa extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 100,
+          height: 70,
         ),
+        ButtonNebirehud(text: "كل الحجوزات", ontap: () {Navigator.of(context).pushNamed("AllBook");}),
         ButtonNebirehud(
           ontap: () {
             Navigator.of(context).pushNamed("First");

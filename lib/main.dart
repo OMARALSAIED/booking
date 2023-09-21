@@ -2,6 +2,7 @@ import 'package:booking/GaarfaaNuberHud/FirstGr.dart';
 import 'package:booking/GaarfaaNuberHud/ForthGR.dart';
 import 'package:booking/GaarfaaNuberHud/SecoundGr.dart';
 import 'package:booking/GaarfaaNuberHud/ThaerdGR.dart';
+import 'package:booking/NeberhudNwa/AllBook.dart';
 import 'package:booking/NeberhudNwa/First.dart';
 
 import 'package:booking/NeberhudNwa/Scand.dart';
@@ -78,7 +79,8 @@ class MyApp extends StatelessWidget {
         "ARABIC": (context) => ARABIC(),
         "BookingPage": (context) => Bookginpage(),
         "success": (context) => success(),
-        "AfterBook": (context) => AfterBook()
+        "AfterBook": (context) => AfterBook(),
+        "AllBook":(context)=>AllBook()
       },
     );
   }

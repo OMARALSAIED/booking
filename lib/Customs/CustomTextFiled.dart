@@ -12,10 +12,11 @@ class CustomTextFiled extends StatelessWidget {
     required this.hint,
     required this.icon,
     this.valid,
-    this.onSaved, required this.mycontroller,
+    this.onSaved,
+    required this.mycontroller,
   });
-  
-    final String? Function(String?)? valid;
+
+  final String? Function(String?)? valid;
   final void Function(String?)? onSaved;
   @override
   Widget build(BuildContext context) {
@@ -30,10 +31,9 @@ class CustomTextFiled extends StatelessWidget {
                 blurRadius: 10,
                 offset: Offset(1, 1))
           ]),
-      height: 60,
+      height: 55,
       width: 350,
       child: TextFormField(
-        
         controller: mycontroller,
         onSaved: onSaved,
         validator: valid,

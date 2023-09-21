@@ -9,3 +9,5 @@ const String linkdeleteuser = "$linkServerName/users/deleteuser.php";
 const String linkedit = "$linkServerName/users/edit.php";
 const String linkdeleteBook = "$linkServerName/users/deletBook.php";
 const String linkgetName = "$linkServerName/users/getname.php";
+const String linkviewUsers = "$linkServerName/users/ViewUsers.php";
+const String CountOfusers = "$linkServerName/users/countofusers.php";
