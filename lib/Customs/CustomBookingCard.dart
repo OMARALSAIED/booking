@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class CustomBookingCard extends StatelessWidget {
@@ -5,10 +6,11 @@ class CustomBookingCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.time,
+  
   });
   final String name;
   final String time;
-
+ 
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -58,8 +60,11 @@ class CustomBookingCard extends StatelessWidget {
               flex: 1,
             ),
           ],
-        )
-      ],
-    ));
+        ),
+       
+          ],
+        ),
+      
+    );
   }
 }

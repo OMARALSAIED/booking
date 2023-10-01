@@ -1,25 +1,20 @@
-import 'package:booking/Customs/CustomBookingCard.dart';
+
+import 'package:booking/Customs/CustomDeleteBookingcard.dart';
 import 'package:booking/Customs/color.dart';
 import 'package:booking/auth/Linkapi.dart';
 import 'package:booking/auth/PostandGetFun.dart';
 import 'package:booking/main.dart';
-
 import 'package:flutter/material.dart';
 
-class thard extends StatefulWidget {
+// ignore: must_be_immutable
+class Allshaakbook extends StatelessWidget {
+  Allshaakbook({super.key});
 
-  const thard({super.key,});
-
-  @override
-  State<thard> createState() => _FirstState();
-}
-
-class _FirstState extends State<thard> {
   Crud _crud = Crud();
-  getthard() async {
-    var response = await _crud
-        .postRequest(getsortbythardn, {"user_id": sharedPref.getString("id")});
 
+  getsortbyshaakcity() async {
+    var response = await _crud
+        .postRequest(getsortbyshaak, {"user_id": sharedPref.getString("id")});
     print("response = ${response}");
     return response;
   }
@@ -33,7 +28,7 @@ class _FirstState extends State<thard> {
         padding: EdgeInsets.all(10),
         child: ListView(children: [
           FutureBuilder(
-            future: getthard(),
+            future: getsortbyshaakcity(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
@@ -41,7 +36,19 @@ class _FirstState extends State<thard> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, i) {
-                      return CustomBookingCard(
+                      return CustomDeleteBookingCard(
+                        onTap: () async {
+                          var response = await _crud.postRequest(
+                              linkdeleteBook, {
+                            "user_id":
+                                "${snapshot.data['data'][i]['id'].toString()}"
+                          });
+
+                          if (response['status'] == ['Success']) {
+                            Navigator.of(context)
+                                .pushReplacementNamed("AllBook");
+                          }
+                        },
                         time: "${snapshot.data['data'][i]['booktime']}",
                         name: "${snapshot.data['data'][i]['fullname']}",
                       );

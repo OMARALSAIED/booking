@@ -36,7 +36,11 @@ class BookingNawa extends StatelessWidget {
         SizedBox(
           height: 70,
         ),
-        ButtonNebirehud(text: "كل الحجوزات", ontap: () {Navigator.of(context).pushNamed("AllBook");}),
+        ButtonNebirehud(
+            text: "كل الحجوزات",
+            ontap: () {
+              Navigator.of(context).pushNamed("AllBook");
+            }),
         ButtonNebirehud(
           ontap: () {
             Navigator.of(context).pushNamed("First");
@@ -51,7 +55,7 @@ class BookingNawa extends StatelessWidget {
         ),
         ButtonNebirehud(
           ontap: () {
-            Navigator.of(context).pushNamed("thared");
+            Navigator.of(context).pushNamed("thard");
           },
           text: "55  الحي الشمالي",
         ),

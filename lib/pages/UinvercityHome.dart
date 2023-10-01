@@ -14,7 +14,7 @@ class UniyvercityHome extends StatelessWidget {
             Center(
               child: Column(children: [
                 SizedBox(
-                  height: 20,
+                  height: 5,
                 ),
                 Container(
                     width: 200,
@@ -24,7 +24,7 @@ class UniyvercityHome extends StatelessWidget {
                       fit: BoxFit.contain,
                     )),
                 SizedBox(
-                  height: 50,
+                  height: 10,
                 ),
                 CustomButtonAdminPage(
                     ontap: () {
@@ -39,6 +39,14 @@ class UniyvercityHome extends StatelessWidget {
                       Navigator.of(context).pushNamed("EPU");
                     },
                     text: "جامعة اليرموك"),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomButtonAdminPage(
+                    ontap: () {
+                      Navigator.of(context).pushNamed("jpu");
+                    },
+                    text: "جامعة الجزيرة"),
                 SizedBox(
                   height: 10,
                 ),

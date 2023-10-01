@@ -1,24 +1,26 @@
 import 'package:booking/Customs/CustomBookingCard.dart';
 import 'package:booking/Customs/color.dart';
 import 'package:booking/auth/Linkapi.dart';
+
 import 'package:booking/auth/PostandGetFun.dart';
 import 'package:booking/main.dart';
 
 import 'package:flutter/material.dart';
 
-class thard extends StatefulWidget {
-
-  const thard({super.key,});
+class jpu extends StatefulWidget {
+  const jpu({
+    super.key,
+  });
 
   @override
-  State<thard> createState() => _FirstState();
+  State<jpu> createState() => _jpuState();
 }
 
-class _FirstState extends State<thard> {
+class _jpuState extends State<jpu> {
   Crud _crud = Crud();
-  getthard() async {
+  getjpu() async {
     var response = await _crud
-        .postRequest(getsortbythardn, {"user_id": sharedPref.getString("id")});
+        .postRequest(getsortbyJPU, {"user_id": sharedPref.getString("id")});
 
     print("response = ${response}");
     return response;
@@ -33,7 +35,7 @@ class _FirstState extends State<thard> {
         padding: EdgeInsets.all(10),
         child: ListView(children: [
           FutureBuilder(
-            future: getthard(),
+            future: getjpu(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(

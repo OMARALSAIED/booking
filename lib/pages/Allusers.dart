@@ -1,3 +1,4 @@
+import 'package:booking/Customs/AllusersCard.dart';
 import 'package:booking/Customs/color.dart';
 import 'package:booking/auth/Linkapi.dart';
 import 'package:booking/auth/PostandGetFun.dart';
@@ -6,9 +7,14 @@ import 'package:booking/main.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class AllUserrs extends StatelessWidget {
+class AllUserrs extends StatefulWidget {
   AllUserrs({super.key});
 
+  @override
+  State<AllUserrs> createState() => _AllUserrsState();
+}
+
+class _AllUserrsState extends State<AllUserrs> {
   Crud _crud = Crud();
 
   viewUsers() async {
@@ -36,150 +42,51 @@ class AllUserrs extends StatelessWidget {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, i) {
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: 80,
-                          ),
-                          Container(
-                              width: 350,
-                              height: 450,
-                              decoration: BoxDecoration(
-                                  color: Hcolor,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Column(
-                                children: [
-                                  Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 15, left: 40),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "${snapshot.data['data'][i]['fullname']}",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                            Text(
-                                              " : الاسم الكامل",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 60),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "${snapshot.data['data'][i]['uniname']}",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                            Text(
-                                              " : اسم الجامعة",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 50),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "${snapshot.data['data'][i]['idnui']}",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                            Text(
-                                              " : الرقم الجامعي",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 60),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "${snapshot.data['data'][i]['phon']}",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                            Text(
-                                              " : رقم الهاتف",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 140),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "${snapshot.data['data'][i]['city']}",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                            Text(
-                                              " : المدينة",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 150),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "${snapshot.data['data'][i]['district']}",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                            Text(
-                                              " : الحي",
-                                              style: TextStyle(
-                                                  fontSize: 25, color: Wihte),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )),
-                        ],
-                      );
+                      return Column(children: [
+                        SizedBox(
+                          height: 80,
+                        ),
+                        Container(
+                            width: 350,
+                            height: 300,
+                            decoration: BoxDecoration(
+                                color: Hcolor,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "صفحة الطالب",
+                                  style: TextStyle(fontSize: 30),
+                                ),
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                AllusersCard(
+                                  onTap: () async {
+                                    var response = await _crud.postRequest(
+                                        linkdeleteuser, {
+                                      "id":
+                                          "${snapshot.data['data'][i]['id'].toString()}"
+                                    });
+
+                                    if (response['status'] == ['Success']) {
+                                      Navigator.of(context)
+                                          .pushReplacementNamed("Allusers");
+                                      setState(() {});
+                                    }
+                                  },
+                                  name:
+                                      "${snapshot.data['data'][i]['fullname']}",
+                                  phon: "${snapshot.data['data'][i]['phon']}",
+                                  uniname:
+                                      "${snapshot.data['data'][i]['uniname']}",
+                                  city: "${snapshot.data['data'][i]['city']}",
+                                  hood:
+                                      "${snapshot.data['data'][i]['district']}",
+                                )
+                              ],
+                            ))
+                      ]);
                     });
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(

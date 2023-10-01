@@ -5,6 +5,7 @@ import 'package:booking/auth/PostandGetFun.dart';
 import 'package:booking/auth/vaild.dart';
 import 'package:booking/main.dart';
 
+
 import 'package:flutter/material.dart';
 
 import '../Customs/CustomButton.dart';
@@ -20,7 +21,7 @@ class _GetStartedState extends State<Login> {
   GlobalKey<FormState> formstate = GlobalKey();
   bool isLoading = false;
   Crud crud = Crud();
-
+  bool isAdmin = false;
   final TextEditingController idnui = TextEditingController();
   final TextEditingController password = TextEditingController();
 
@@ -29,15 +30,17 @@ class _GetStartedState extends State<Login> {
       isLoading = true;
       setState(() {});
       var response = await crud
-          .postRequest(linkLogin, {"idnui": idnui.text, "password": password.text});
+          .postRequest(linkLogin, {"idnui": idnui.text, "phon": password.text});
       isLoading = false;
       setState(() {});
       if (response['status'] == 'Success') {
         sharedPref.setString("id", response['data']['id'].toString());
         sharedPref.setString("idnui", response['data']['idnui'].toString());
-        sharedPref.setString(
-            "password", response['data']['password'].toString());
-        Navigator.of(context).pushNamedAndRemoveUntil("Home", (route) => false);
+        sharedPref.setString("phon", response['data']['phon'].toString());
+       
+        
+          Navigator.of(context).pushReplacementNamed("${AorU()}");
+        
       } else {
         AwesomeDialog(
           context: context,

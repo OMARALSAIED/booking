@@ -17,14 +17,13 @@ class First extends StatefulWidget {
 
 class _FirstState extends State<First> {
   Crud _crud = Crud();
-  getbook() async {
+  getFirst() async {
     var response = await _crud
-        .postRequest(linkviewbook, {"user_id": sharedPref.getString("id")});
+        .postRequest(getsortbyFirst, {"user_id": sharedPref.getString("id")});
 
     print("response = ${response}");
     return response;
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class _FirstState extends State<First> {
         padding: EdgeInsets.all(10),
         child: ListView(children: [
           FutureBuilder(
-            future: getbook(),
+            future: getFirst(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
@@ -45,7 +44,7 @@ class _FirstState extends State<First> {
                     itemBuilder: (context, i) {
                       return CustomBookingCard(
                         time: "${snapshot.data['data'][i]['booktime']}",
-                        name: "${snapshot.data['data'][i]['user_id']}",
+                        name: "${snapshot.data['data'][i]['fullname']}",
                       );
                     });
               } else if (snapshot.connectionState == ConnectionState.waiting) {
@@ -66,6 +65,3 @@ class _FirstState extends State<First> {
     );
   }
 }
-
-
-

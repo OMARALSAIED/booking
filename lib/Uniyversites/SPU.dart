@@ -1,47 +1,66 @@
+import 'package:booking/Customs/CustomBookingCard.dart';
+import 'package:booking/Customs/color.dart';
+import 'package:booking/auth/Linkapi.dart';
+
+import 'package:booking/auth/PostandGetFun.dart';
+import 'package:booking/main.dart';
+
 import 'package:flutter/material.dart';
 
-import '../Customs/Booknumber.dart';
-import '../Customs/color.dart';
+class SPU extends StatefulWidget {
+  const SPU({
+    super.key,
+  });
 
-class SPU extends StatelessWidget {
-  const SPU({super.key});
+  @override
+  State<SPU> createState() => _SPUState();
+}
+
+class _SPUState extends State<SPU> {
+  Crud _crud = Crud();
+  getSPU() async {
+    var response = await _crud
+        .postRequest(getsortbySPU, {"user_id": sharedPref.getString("id")});
+
+    print("response = ${response}");
+    return response;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Hcolor,
-      body: SingleChildScrollView(
-        child: Column(children: [
-          SizedBox(
-            height: 90,
+      backgroundColor: Black,
+      appBar: AppBar(backgroundColor: Hcolor, actions: []),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: ListView(children: [
+          FutureBuilder(
+            future: getSPU(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: snapshot.data['data'].length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, i) {
+                      return CustomBookingCard(
+                        time: "${snapshot.data['data'][i]['booktime']}",
+                        name: "${snapshot.data['data'][i]['fullname']}",
+                      );
+                    });
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: Text(
+                    "Loading...",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                );
+              }
+              return Center(
+                child: Text("Loading...", style: TextStyle(fontSize: 15)),
+              );
+            },
           ),
-          Center(
-            child: Text(
-              "الجامعة السورية",
-              style: TextStyle(fontSize: 35, color: Wihte),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(5),
-            child: Row(
-              children: [
-                BookNumberincity(text1: "2"),
-                BookNumberincity(text1: "عدد الطلاب")
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            alignment: Alignment.topCenter,
-            child: Text(
-              "omar \n sallem",
-              style: TextStyle(fontSize: 25),
-            ),
-            height: 500,
-            width: 350,
-            decoration: BoxDecoration(
-                color: Wihte, borderRadius: BorderRadius.circular(10)),
-          )
         ]),
       ),
     );

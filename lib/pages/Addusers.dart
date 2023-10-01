@@ -108,7 +108,7 @@ class _AddusersState extends State<Addusers> {
                   ),
                   CustomTextFiled(
                       valid: (val) {
-                        return VaildInput(val!, 3, 50);
+                        return VaildInput(val!, 5, 50);
                       },
                       mycontroller: fullname,
                       hint: "الإسم الكامل",
@@ -118,7 +118,7 @@ class _AddusersState extends State<Addusers> {
                   ),
                   CustomTextFiled(
                       valid: (val) {
-                        return VaildInput(val!, 1, 50);
+                        return VaildInput(val!, 4, 50);
                       },
                       mycontroller: uniname,
                       hint: "اسم الجامعة",
@@ -128,7 +128,7 @@ class _AddusersState extends State<Addusers> {
                   ),
                   CustomTextFiled(
                       valid: (val) {
-                        return VaildInput(val!, 1, 30);
+                        return VaildInput(val!, 7, 30);
                       },
                       mycontroller: phon,
                       hint: "رقم الهاتف",
@@ -138,7 +138,7 @@ class _AddusersState extends State<Addusers> {
                   ),
                   CustomTextFiled(
                       valid: (val) {
-                        return VaildInput(val!, 1, 30);
+                        return VaildInput(val!, 3, 30);
                       },
                       mycontroller: city,
                       hint: "المدينة",
@@ -148,7 +148,7 @@ class _AddusersState extends State<Addusers> {
                   ),
                   CustomTextFiled(
                       valid: (val) {
-                        return VaildInput(val!, 1, 30);
+                        return VaildInput(val!, 5, 30);
                       },
                       mycontroller: district,
                       hint: "الحي",
@@ -164,7 +164,10 @@ class _AddusersState extends State<Addusers> {
                         color: Hcolor, borderRadius: BorderRadius.circular(10)),
                     child: InkWell(
                       onTap: () async {
-                        await signUp();
+                        var response = await signUp();
+                        if (response['status'] == ['success']) {
+                          Navigator.of(context).pushReplacementNamed("Adduers");
+                        }
                       },
                       child: Text(
                         "إضافة",

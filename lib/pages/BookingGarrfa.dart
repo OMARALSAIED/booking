@@ -32,8 +32,13 @@ class BookingGarrfa extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 100,
+          height: 50,
         ),
+        ButtonNebirehud(
+            text: "كل الحجوزات",
+            ontap: () {
+              Navigator.of(context).pushNamed("Allbookingg");
+            }),
         ButtonNebirehud(
           ontap: () {
             Navigator.of(context).pushNamed("FirstGr");

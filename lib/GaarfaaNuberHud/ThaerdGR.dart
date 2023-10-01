@@ -1,46 +1,65 @@
-import 'package:booking/Customs/Booknumber.dart';
+import 'package:booking/Customs/CustomBookingCard.dart';
 import 'package:booking/Customs/color.dart';
+import 'package:booking/auth/Linkapi.dart';
+import 'package:booking/auth/PostandGetFun.dart';
+import 'package:booking/main.dart';
+
 import 'package:flutter/material.dart';
 
-class thaerdGr extends StatelessWidget {
-  const thaerdGr({super.key});
+class ThaerdGR extends StatefulWidget {
+  const ThaerdGR({
+    super.key,
+  });
+
+  @override
+  State<ThaerdGR> createState() => _FirstState();
+}
+
+class _FirstState extends State<ThaerdGR> {
+  Crud _crud = Crud();
+  getThaerdGRr() async {
+    var response = await _crud
+        .postRequest(getsortbythardng, {"user_id": sharedPref.getString("id")});
+
+    print("response = ${response}");
+    return response;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Hcolor,
-      body: SingleChildScrollView(
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 45),
-            child: Center(
-              child: Text(
-                "الحي الشمالي",
-                style: TextStyle(fontSize: 35, color: Wihte),
-              ),
-            ),
+      backgroundColor: Black,
+      appBar: AppBar(backgroundColor: Hcolor, actions: []),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: ListView(children: [
+          FutureBuilder(
+            future: getThaerdGRr(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: snapshot.data['data'].length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, i) {
+                      return CustomBookingCard(
+                        time: "${snapshot.data['data'][i]['booktime']}",
+                        name: "${snapshot.data['data'][i]['fullname']}",
+                      );
+                    });
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: Text(
+                    "Loading...",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                );
+              }
+              return Center(
+                child: Text("Loading...", style: TextStyle(fontSize: 15)),
+              );
+            },
           ),
-          Padding(
-            padding: const EdgeInsets.all(5),
-            child: Row(
-              children: [
-                BookNumberincity(text1: "3"),
-                BookNumberincity(text1: "عدد الطلاب")
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            alignment: Alignment.topCenter,
-            child: Text(
-              "grfa",
-              style: TextStyle(fontSize: 25),
-            ),
-            height: 500,
-            width: 350,
-            decoration: BoxDecoration(
-                color: Wihte, borderRadius: BorderRadius.circular(10)),
-          )
         ]),
       ),
     );

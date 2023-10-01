@@ -9,7 +9,7 @@ class Bookingchaak extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Black,
+      backgroundColor: Dcolor,
       body: Column(children: [
         SizedBox(
           height: 60,
@@ -34,6 +34,11 @@ class Bookingchaak extends StatelessWidget {
         SizedBox(
           height: 100,
         ),
+        ButtonNebirehud(
+            text: "كل الحجوزات",
+            ontap: () {
+              Navigator.of(context).pushNamed("Allshaakbook");
+            }),
         ButtonNebirehud(
           ontap: () {
             Navigator.of(context).pushNamed("Firstsh");

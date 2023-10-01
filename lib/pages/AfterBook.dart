@@ -1,4 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:booking/Customs/MessageNotification.dart';
+import 'package:booking/Customs/SeccessBookingCard.dart';
 import 'package:booking/Customs/color.dart';
 import 'package:booking/Customs/customBookbutton.dart';
 import 'package:booking/auth/Linkapi.dart';
@@ -22,13 +24,6 @@ class _AfterBookState extends State<AfterBook> {
     return response;
   }
 
-  getName() async {
-    var response = await _crud
-        .postRequest(linkgetName, {"id": sharedPref.getString("id")});
-
-    return response;
-  }
-
   deleteBook() async {
     var response = await _crud
         .postRequest(linkdeleteBook, {"user_id": sharedPref.getString("id")});
@@ -36,11 +31,32 @@ class _AfterBookState extends State<AfterBook> {
     return response;
   }
 
+  addNameDeletebook() async {
+    var response = await _crud.postRequest(
+        addNamedeleteBook, {"user_iddelet": sharedPref.getString("id")});
+    return response;
+  }
+
+  NotificMessage notificMessage = NotificMessage();
+
+  @override
+  void initState() {
+    super.initState();
+    notificMessage.initialiseNotificatois();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: Hcolor, actions: [
+        IconButton(
+            onPressed: () {
+              sharedPref.clear();
+              Navigator.of(context).pushReplacementNamed("Login");
+            },
+            icon: Icon(Icons.exit_to_app))
+      ]),
       backgroundColor: Black,
-      appBar: AppBar(backgroundColor: Hcolor, actions: []),
       body: Container(
         padding: EdgeInsets.all(10),
         child: ListView(children: [
@@ -50,14 +66,31 @@ class _AfterBookState extends State<AfterBook> {
               if (snapshot.hasData) {
                 if (snapshot.data['status'] == 'Failed')
                   return Center(
-                    
-                    child: Text(
-                      "ليس لديك أي حجز حاليا",
-                      style: TextStyle(fontSize: 30, color: Wihte),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 250,
+                        ),
+                        Text(
+                          "ليس لديك أي حجز حاليا",
+                          style: TextStyle(fontSize: 30, color: Wihte),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          width: 250,
+                          height: 60,
+                          child: CustomBookbutton(
+                            text: "الرجوع للحجز",
+                            onTap: () {
+                              Navigator.of(context).pushNamed("BookingPage");
+                            },
+                          ),
+                        )
+                      ],
                     ),
-                    
                   );
-                  
 
                 return ListView.builder(
                     itemCount: snapshot.data['data'].length,
@@ -84,58 +117,17 @@ class _AfterBookState extends State<AfterBook> {
                                   SizedBox(
                                     height: 50,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 100),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "${snapshot.data['data'][i]['booktime']}",
-                                          style: TextStyle(
-                                              fontSize: 20, color: Wihte),
-                                        ),
-                                        Text(
-                                          " : وقت الرحلة الساعة",
-                                          style: TextStyle(
-                                              fontSize: 25, color: Wihte),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 60),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          " : الوقت الذي تم فيه الحجز",
-                                          style: TextStyle(
-                                              fontSize: 25, color: Wihte),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Text(
-                                    "${snapshot.data['data'][i]['time']}",
-                                    style:
-                                        TextStyle(fontSize: 20, color: Wihte),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        " الاسم : ",
-                                        style: TextStyle(
-                                            fontSize: 25, color: Wihte),
-                                      ),
-                                      Text(
+                                  SeccessCustomBookingCard(
+                                    name:
                                         "${snapshot.data['data'][i]['fullname']}",
-                                        style: TextStyle(
-                                            fontSize: 20, color: Wihte),
-                                      ),
-                                    ],
+                                    time: "${snapshot.data['data'][i]['time']}",
+                                    bookingtime:
+                                        "${snapshot.data['data'][i]['booktime']}",
                                   )
                                 ],
                               )),
                           SizedBox(
-                            height: 100,
+                            height: 10,
                           ),
                           CustomBookbutton(
                             text: "إلغاءالحجز",
@@ -147,9 +139,13 @@ class _AfterBookState extends State<AfterBook> {
                                 title: 'هل تريد بالفعل إلغاء الحجز؟',
                                 btnCancelOnPress: () {},
                                 btnOkOnPress: () async {
-                                  await deleteBook();
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                      "BookingPage", (route) => false);
+                                  addNameDeletebook();
+                                  AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      animType: AnimType.rightSlide,
+                                      title: "تم إرسال طلب الإلغاء الى المشرف")
+                                    ..show();
                                 },
                               )..show();
                             },
@@ -157,7 +153,7 @@ class _AfterBookState extends State<AfterBook> {
                         ],
                       );
                     });
-              } else if (snapshot.connectionState == ConnectionState.waiting        ) {
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: Text(
                     "Loading...",
