@@ -1,6 +1,13 @@
-# booking
+# How to open the program and the techniques used
 
-A new Flutter project.
+Download the program, then open it on vs code using the emulator and make sure localhost is running
+
+
+1-  Mysql database
+
+2-  API  The API was designed using PHP
+
+3- SharedPreferences I used it to store login data and access data from several areas of the application
 
 ## Getting Started
 

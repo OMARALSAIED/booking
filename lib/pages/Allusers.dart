@@ -69,11 +69,12 @@ class _AllUserrsState extends State<AllUserrs> {
                                           "${snapshot.data['data'][i]['id'].toString()}"
                                     });
 
-                                    if (response['status'] == ['Success']) {
-                                      Navigator.of(context)
-                                          .pushReplacementNamed("Allusers");
-                                      setState(() {});
-                                    }
+                                    setState(() {
+                                      if (response['status'] == ['Success']) {
+                                        Navigator.of(context)
+                                            .pushReplacementNamed("Allusers");
+                                      }
+                                    });
                                   },
                                   name:
                                       "${snapshot.data['data'][i]['fullname']}",

@@ -1,4 +1,3 @@
-
 import 'package:booking/Customs/CustomDeleteBookingcard.dart';
 import 'package:booking/Customs/color.dart';
 import 'package:booking/auth/Linkapi.dart';
@@ -7,9 +6,14 @@ import 'package:booking/main.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class Allshaakbook extends StatelessWidget {
+class Allshaakbook extends StatefulWidget {
   Allshaakbook({super.key});
 
+  @override
+  State<Allshaakbook> createState() => _AllshaakbookState();
+}
+
+class _AllshaakbookState extends State<Allshaakbook> {
   Crud _crud = Crud();
 
   getsortbyshaakcity() async {
@@ -44,10 +48,12 @@ class Allshaakbook extends StatelessWidget {
                                 "${snapshot.data['data'][i]['id'].toString()}"
                           });
 
-                          if (response['status'] == ['Success']) {
-                            Navigator.of(context)
-                                .pushReplacementNamed("AllBook");
-                          }
+                          setState(() {
+                            if (response['status'] == ['Success']) {
+                              Navigator.of(context)
+                                  .pushReplacementNamed("AllBook");
+                            }
+                          });
                         },
                         time: "${snapshot.data['data'][i]['booktime']}",
                         name: "${snapshot.data['data'][i]['fullname']}",

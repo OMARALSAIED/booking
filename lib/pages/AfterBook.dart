@@ -7,6 +7,7 @@ import 'package:booking/auth/Linkapi.dart';
 import 'package:booking/auth/PostandGetFun.dart';
 import 'package:booking/main.dart';
 import 'package:flutter/material.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class AfterBook extends StatefulWidget {
   const AfterBook({super.key});
@@ -69,14 +70,44 @@ class _AfterBookState extends State<AfterBook> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 250,
+                          height: 30,
+                        ),
+                        Text(
+                          "Hello ",
+                          style: TextStyle(fontSize: 50, color: Wihte),
+                        ),
+                        SizedBox(
+                          height: 50,
                         ),
                         Text(
                           "ليس لديك أي حجز حاليا",
                           style: TextStyle(fontSize: 30, color: Wihte),
                         ),
+                        AvatarGlow(
+                          glowColor: Colors.blue,
+                          endRadius: 100,
+                          duration: Duration(milliseconds: 2500),
+                          repeat: true,
+                          showTwoGlows: true,
+                          repeatPauseDuration: Duration(milliseconds: 150),
+                          child: Material(
+                            elevation: 5,
+                            shape: CircleBorder(
+                              side: BorderSide(width: 0.5, color: Hcolor),
+                            ),
+                            child: CircleAvatar(
+                              backgroundColor: Black,
+                              child: Icon(
+                                Icons.favorite,
+                                color: Hcolor,
+                                size: 50,
+                              ),
+                              radius: 50,
+                            ),
+                          ),
+                        ),
                         SizedBox(
-                          height: 30,
+                          height: 150,
                         ),
                         Container(
                           width: 250,
@@ -120,7 +151,7 @@ class _AfterBookState extends State<AfterBook> {
                                   SeccessCustomBookingCard(
                                     name:
                                         "${snapshot.data['data'][i]['fullname']}",
-                                    time: "${snapshot.data['data'][i]['time']}",
+                                    time: "${snapshot.data['data'][i]['hour']}",
                                     bookingtime:
                                         "${snapshot.data['data'][i]['booktime']}",
                                   )
@@ -157,12 +188,13 @@ class _AfterBookState extends State<AfterBook> {
                 return Center(
                   child: Text(
                     "Loading...",
-                    style: TextStyle(fontSize: 15),
+                    style: TextStyle(fontSize: 15, color: Wihte),
                   ),
                 );
               }
               return Center(
-                child: Text("Loading...", style: TextStyle(fontSize: 15)),
+                child: Text("Loading...",
+                    style: TextStyle(fontSize: 15, color: Wihte)),
               );
             },
           ),

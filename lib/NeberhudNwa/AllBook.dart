@@ -42,21 +42,23 @@ class _AllBookState extends State<AllBook> {
                     itemBuilder: (context, i) {
                       return CustomDeleteBookingCard(
                         onTap: () async {
-                                    var response = await _crud.postRequest(
-                                        linkdeleteBook, {
-                                      "user_id":
-                                          "${snapshot.data['data'][i]['id'].toString()}"
-                                    });
-
-                                    if (response['status'] == ['Success']) {
-                                      Navigator.of(context)
-                                          .pushReplacementNamed("AllBook");
-                                      setState(() {});
-                                    }
-                                  },
+                          var response = await _crud.postRequest(
+                              linkdeleteBook, {
+                            "user_id":
+                                "${snapshot.data['data'][i]['id'].toString()}"
+                          });
+                          setState(() {
+                            if (response['status'] == ['Success']) {
+                              Navigator.of(context)
+                                  .pushReplacementNamed("AllBook");
+                            }
+                          });
+                        },
+                        
                         time: "${snapshot.data['data'][i]['booktime']}",
                         name: "${snapshot.data['data'][i]['fullname']}",
                       );
+                      
                     });
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(

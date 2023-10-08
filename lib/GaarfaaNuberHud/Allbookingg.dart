@@ -48,11 +48,13 @@ class _AllBookinggState extends State<AllBookingg> {
                                 "${snapshot.data['data'][i]['id'].toString()}"
                           });
 
-                          if (response['status'] == ['Success']) {
+                        setState(() {
+                            if (response['status'] == ['Success']) {
                             Navigator.of(context)
                                 .pushReplacementNamed("Allbookingg");
-                            setState(() {});
+                           
                           }
+                        });
                         },
                         time: "${snapshot.data['data'][i]['booktime']}",
                         name: "${snapshot.data['data'][i]['fullname']}",

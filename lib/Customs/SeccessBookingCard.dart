@@ -1,3 +1,4 @@
+import 'package:booking/Customs/color.dart';
 import 'package:flutter/material.dart';
 
 class SeccessCustomBookingCard extends StatelessWidget {
@@ -32,7 +33,7 @@ class SeccessCustomBookingCard extends StatelessWidget {
               ),
               Text(
                 " : وقت الرحلة الساعة",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               Spacer(
                 flex: 1,
@@ -54,7 +55,7 @@ class SeccessCustomBookingCard extends StatelessWidget {
               ),
               Text(
                 ": اسم الطالب",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               Spacer(
                 flex: 1,
@@ -64,13 +65,23 @@ class SeccessCustomBookingCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Spacer(
+                flex: 20,
+              ),
               Text(
                 time,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
+              Spacer(
+                flex: 1,
+              ),
               Text(
-                ": وقت الحجز",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ": الوقت الذي تم فيه الحجز",
+                style: TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.bold, color: Black),
+              ),
+              Spacer(
+                flex: 2,
               ),
             ],
           ),

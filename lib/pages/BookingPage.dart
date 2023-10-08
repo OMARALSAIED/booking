@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking/Customs/color.dart';
 import 'package:booking/Customs/customBookbutton.dart';
@@ -46,10 +47,10 @@ class _BookginpageState extends State<Bookginpage> {
   }
 
   final List<String> items = [
-    '7',
-    '12:30',
-    '2:30',
-    '4',
+    '7 AM',
+    '12:30 PM',
+    '2:30 PM',
+    '4 PM',
   ];
   String? selectedValue;
 
@@ -73,9 +74,27 @@ class _BookginpageState extends State<Bookginpage> {
                           "احجز الان",
                           style: TextStyle(fontSize: 45, color: Hcolor),
                         ),
-                        CircleAvatar(
-                          radius: 80,
-                          backgroundImage: AssetImage("assets/bus.png"),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        AvatarGlow(
+                          glowColor: Hcolor,
+                          endRadius: 100,
+                          duration: Duration(milliseconds: 2500),
+                          repeat: true,
+                          showTwoGlows: true,
+                          repeatPauseDuration: Duration(milliseconds: 150),
+                          child: Material(
+                            elevation: 5,
+                            shape: CircleBorder(
+                              side: BorderSide(width: 0.5, color: Hcolor),
+                            ),
+                            child: CircleAvatar(
+                              backgroundColor: Black,
+                              child: Image.asset("assets/bus.png"),
+                              radius: 50,
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: 100,
@@ -83,6 +102,10 @@ class _BookginpageState extends State<Bookginpage> {
                         Center(
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton2<String>(
+                              dropdownStyleData: DropdownStyleData(
+                                  decoration: BoxDecoration(
+                                      color: Black,
+                                      borderRadius: BorderRadius.circular(20))),
                               isExpanded: true,
                               hint: Text(
                                 'أختر وقت ',
@@ -98,8 +121,9 @@ class _BookginpageState extends State<Bookginpage> {
                                             child: Text(
                                               item,
                                               style: const TextStyle(
-                                                fontSize: 14,
-                                              ),
+                                                  fontSize: 20,
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                           ))
                                   .toList(),
@@ -108,18 +132,18 @@ class _BookginpageState extends State<Bookginpage> {
                                 setState(() {
                                   selectedValue = value;
                                   switch (selectedValue) {
-                                    case "7":
-                                      Booktime.text = "7";
+                                    case "7 AM":
+                                      Booktime.text = "7 AM";
                                       break;
-                                    case "12:30":
-                                      Booktime.text = "12:30";
+                                    case "12:30 PM":
+                                      Booktime.text = "12:30 PM";
                                       break;
 
-                                    case "2:30":
-                                      Booktime.text = "2:30";
+                                    case "2:30 PM":
+                                      Booktime.text = "2:30 PM";
                                       break;
-                                    case "4":
-                                      Booktime.text = "4";
+                                    case "4 PM":
+                                      Booktime.text = "4 PM";
                                       break;
                                   }
                                 });
@@ -136,7 +160,7 @@ class _BookginpageState extends State<Bookginpage> {
                           ),
                         ),
                         SizedBox(
-                          height: 150,
+                          height: 190,
                         ),
                         Center(
                           child: Padding(
@@ -152,12 +176,14 @@ class _BookginpageState extends State<Bookginpage> {
                                         animType: AnimType.rightSlide,
                                         title: "هل تريد تأكيد الحجز",
                                         btnOkOnPress: () {
-                                          addBook();
+                                          setState(() {
+                                            addBook();
 
-                                          Navigator.of(context)
-                                              .pushNamedAndRemoveUntil(
-                                                  "AfterBook",
-                                                  (route) => false);
+                                            Navigator.of(context)
+                                                .pushNamedAndRemoveUntil(
+                                                    "AfterBook",
+                                                    (route) => false);
+                                          });
                                         },
                                         btnCancelOnPress: () {},
                                       )..show();
